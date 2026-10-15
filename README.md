@@ -23,7 +23,7 @@ FASTQ (raw reads)
 ```
 
 ## Progress checklist
-- [ ] Environment set up (conda, tool versions recorded)
+- [x] Environment set up (conda, tool versions recorded)
 - [ ] Public dataset downloaded (accession listed below)
 - [ ] Reference genome downloaded and indexed
 - [ ] Raw read QC with FastQC and MultiQC, results interpreted
@@ -41,8 +41,20 @@ FASTQ (raw reads)
 - **Reference:** NCBI nucleotide record `NC_000913.3` (E. coli K-12 MG1655), if the chosen run matches that strain.
 - Only publicly available data is used. No patient or personal data is involved. Raw data files are not stored in this repository.
 
-## Tools (versions will be recorded in `environment.yml`)
-FastQC, MultiQC, fastp, BWA, samtools, bcftools, Python (Biopython, matplotlib).
+## Tools and versions
+Installed with conda (conda-forge and bioconda) in an environment named `ngs`.
+
+| Tool | Version |
+|---|---|
+| FastQC | 0.13.0 |
+| MultiQC | 1.35 |
+| fastp | 1.4.0 |
+| BWA | 0.7.19 |
+| samtools | 1.24 |
+| bcftools | 1.24 |
+| sra-tools (fastq-dump) | 3.4.1 |
+
+Environment: Ubuntu on WSL 2 (Windows).
 
 ## Repository structure (planned)
 ```
