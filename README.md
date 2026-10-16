@@ -37,7 +37,7 @@ FASTQ (raw reads)
 - [ ] Results and limitations written up in this README
 
 ## Data
-- **Reads:** NCBI SRA run `<ACCESSION TO BE ADDED>` (Illumina, paired-end). Only a subset of reads is used for speed.
+- **Reads:** NCBI SRA run `ERR022075` (Illumina, paired-end). Only a subset of reads is used for speed.
 - **Reference:** NCBI nucleotide record `NC_000913.3` (E. coli K-12 MG1655), if the chosen run matches that strain.
 - Only publicly available data is used. No patient or personal data is involved. Raw data files are not stored in this repository.
 
