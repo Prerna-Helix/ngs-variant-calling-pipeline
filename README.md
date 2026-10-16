@@ -24,9 +24,9 @@ FASTQ (raw reads)
 
 ## Progress checklist
 - [x] Environment set up (conda, tool versions recorded)
-- [ ] Public dataset downloaded (accession listed below)
+- [x] Public dataset downloaded (accession listed below)
 - [ ] Reference genome downloaded and indexed
-- [ ] Raw read QC with FastQC and MultiQC, results interpreted
+- [x] Raw read QC with FastQC and MultiQC, results interpreted
 - [ ] Trimming with fastp, before/after QC compared
 - [ ] Alignment with BWA-MEM, sorted and indexed BAM
 - [ ] Alignment QC (mapping rate, duplicates, depth)
@@ -80,8 +80,13 @@ bash run_pipeline.sh
 ```
 
 ## Results
-_To be added after the analysis is complete:_
 - Raw read QC findings and what was trimmed
+  ### Raw read QC (FastQC 0.13.0, MultiQC 1.35)
+- 500,000 read pairs from ERR022075 (R1: 100 bp, R2: 102 bp), Sanger/Illumina 1.9 quality encoding.
+- Per-base quality is high (mostly Q36-Q40) and declines slightly toward the 3' end.
+- No adapter contamination detected and no duplication problem.
+- Read 2 fails per-base quality only because of poor quality at the first base; ~0.24% of R2 reads are entirely N, which also causes the GC-content and overrepresented-sequence flags.
+- Plan: trim with fastp (remove low-quality ends and N reads), then re-run FastQC to compare.
 - Mapping rate and mean depth
 - Number of raw and filtered variants, filters used and why
 
