@@ -25,9 +25,9 @@ FASTQ (raw reads)
 ## Progress checklist
 - [x] Environment set up (conda, tool versions recorded)
 - [x] Public dataset downloaded (accession listed below)
-- [ ] Reference genome downloaded and indexed
+- [x] Reference genome downloaded and indexed
 - [x] Raw read QC with FastQC and MultiQC, results interpreted
-- [ ] Trimming with fastp, before/after QC compared
+- [x] Trimming with fastp, before/after QC compared
 - [ ] Alignment with BWA-MEM, sorted and indexed BAM
 - [ ] Alignment QC (mapping rate, duplicates, depth)
 - [ ] Variant calling and filtering with bcftools
@@ -39,6 +39,7 @@ FASTQ (raw reads)
 ## Data
 - **Reads:** NCBI SRA run `ERR022075` (Illumina, paired-end). Only a subset of reads is used for speed.
 - **Reference:** NCBI nucleotide record `NC_000913.3` (E. coli K-12 MG1655), if the chosen run matches that strain.
+- “Reference: NC_000913.3 (4,641,652 bp), indexed with BWA 0.7.19 and samtools 1.24.”
 - Only publicly available data is used. No patient or personal data is involved. Raw data files are not stored in this repository.
 
 ## Tools and versions
@@ -87,6 +88,12 @@ bash run_pipeline.sh
 - No adapter contamination detected and no duplication problem.
 - Read 2 fails per-base quality only because of poor quality at the first base; ~0.24% of R2 reads are entirely N, which also causes the GC-content and overrepresented-sequence flags.
 - Plan: trim with fastp (remove low-quality ends and N reads), then re-run FastQC to compare.
+  ### Trimming (fastp 1.4.0; -q 20 -l 36, adapter detection on)
+- 500,000 read pairs -> 477,891 pairs retained (4.4% removed: 43,908 low quality, 298 too many N, 12 too short).
+- No adapter contamination detected; 830 reads had adapter bases trimmed.
+- Bases at Q30 or better rose from 90.5% to 92.7%.
+- Re-run FastQC: Read 2 per-base quality and overrepresented-sequence flags now pass. Remaining warnings (GC content, length distribution) are expected for single-genome bacterial data after trimming.
+- Duplication rate: 0.76%.
 - Mapping rate and mean depth
 - Number of raw and filtered variants, filters used and why
 
