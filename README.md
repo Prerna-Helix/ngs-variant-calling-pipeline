@@ -94,6 +94,7 @@ bash run_pipeline.sh
 - Bases at Q30 or better rose from 90.5% to 92.7%.
 - Re-run FastQC: Read 2 per-base quality and overrepresented-sequence flags now pass. Remaining warnings (GC content, length distribution) are expected for single-genome bacterial data after trimming.
 - Duplication rate: 0.76%.
+QC reports are in results/qc/
 - Mapping rate and mean depth
 - Number of raw and filtered variants, filters used and why
 
