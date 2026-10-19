@@ -31,8 +31,8 @@ FASTQ (raw reads)
 - [x] Alignment with BWA-MEM, sorted and indexed BAM
 - [x] Alignment QC (mapping rate, duplicates, depth)
 - [x] Variant calling and filtering with bcftools
-- [ ] Pipeline combined into one bash script
-- [ ] Python script plotting mean base quality per position
+- [x] Pipeline combined into one bash script
+- [x] Python script plotting mean base quality per position
 - [ ] Short cloud exercise (Google Cloud Shell or AWS CloudShell) documented
 - [ ] Results and limitations written up in this README
 
@@ -74,21 +74,15 @@ ngs-variant-calling-pipeline/
 ```
 
 ## How to run
-Instructions will be added when the pipeline is finished. The plan is:
-```
-conda env create -f environment.yml
-conda activate ngs
-bash run_pipeline.sh
-```
+conda env create -f environment.yml -n ngs   # pipeline tools
+bash run_pipeline.sh                         # runs QC -> trimming -> alignment -> variant calling -> filtering
 
 ## Results
-- Raw read QC findings and what was trimmed
   ### Raw read QC (FastQC 0.13.0, MultiQC 1.35)
 - 500,000 read pairs from ERR022075 (R1: 100 bp, R2: 102 bp), Sanger/Illumina 1.9 quality encoding.
 - Per-base quality is high (mostly Q36-Q40) and declines slightly toward the 3' end.
 - No adapter contamination detected and no duplication problem.
 - Read 2 fails per-base quality only because of poor quality at the first base; ~0.24% of R2 reads are entirely N, which also causes the GC-content and overrepresented-sequence flags.
-- Plan: trim with fastp (remove low-quality ends and N reads), then re-run FastQC to compare.
   ### Trimming (fastp 1.4.0; -q 20 -l 36, adapter detection on)
 - 500,000 read pairs -> 477,891 pairs retained (4.4% removed: 43,908 low quality, 298 too many N, 12 too short).
 - No adapter contamination detected; 830 reads had adapter bases trimmed.
@@ -96,19 +90,21 @@ bash run_pipeline.sh
 - Re-run FastQC: Read 2 per-base quality and overrepresented-sequence flags now pass. Remaining warnings (GC content, length distribution) are expected for single-genome bacterial data after trimming.
 - Duplication rate: 0.76%.
 QC reports are in results/qc/
-- Mapping rate and mean depth
   ### Alignment (BWA-MEM 0.7.19, samtools 1.24)
 - 477,891 trimmed read pairs aligned to NC_000913.3 (E. coli K-12 MG1655).
 - 99.99% of reads mapped; 99.14% properly paired; 27 singletons.
 - Mean depth: 20.8x across the 4,641,652 bp genome.
 - This confirms the dataset matches the reference strain.
-- Number of raw and filtered variants, filters used and why
   ### Variant calling and filtering (bcftools 1.24, haploid, --ploidy 1)
 - bcftools mpileup + call on the sorted BAM: 22 raw variants.
 - Filter: QUAL >= 30 and DP >= 10 (chosen for ~21x mean depth) -> 1 variant retained.
 - 21 removed calls were low-confidence (QUAL 3-11, mostly supported by a single read), consistent with sequencing errors.
 - Retained variant: NC_000913.3:4296380 AC>ACGC (2-bp insertion), QUAL 228, depth 18, 17 of 18 reads support the alternate allele, seen on both strands.
 - Not interpreted biologically; no gene annotation was done for this bacterial dataset.
+  ### Reproducibility
+The full workflow runs with one command (`bash run_pipeline.sh`) and reproduced the step-by-step results exactly (22 raw variants, 1 after filtering).
+Plots are made by `scripts/mean_quality_plot.py` in a separate conda environment (`environment_plots.yml`: Python 3.12, Biopython, matplotlib).
+Insert size estimated by BWA-MEM: mean ~504 bp (SD ~27).
 
 ## Limitations (known in advance)
 - Small bacterial dataset used for learning; it is haploid, so human diploid genotypes are not shown here.
