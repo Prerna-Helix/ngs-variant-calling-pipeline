@@ -30,7 +30,7 @@ FASTQ (raw reads)
 - [x] Trimming with fastp, before/after QC compared
 - [x] Alignment with BWA-MEM, sorted and indexed BAM
 - [x] Alignment QC (mapping rate, duplicates, depth)
-- [ ] Variant calling and filtering with bcftools
+- [x] Variant calling and filtering with bcftools
 - [ ] Pipeline combined into one bash script
 - [ ] Python script plotting mean base quality per position
 - [ ] Short cloud exercise (Google Cloud Shell or AWS CloudShell) documented
@@ -103,6 +103,12 @@ QC reports are in results/qc/
 - Mean depth: 20.8x across the 4,641,652 bp genome.
 - This confirms the dataset matches the reference strain.
 - Number of raw and filtered variants, filters used and why
+  ### Variant calling and filtering (bcftools 1.24, haploid, --ploidy 1)
+- bcftools mpileup + call on the sorted BAM: 22 raw variants.
+- Filter: QUAL >= 30 and DP >= 10 (chosen for ~21x mean depth) -> 1 variant retained.
+- 21 removed calls were low-confidence (QUAL 3-11, mostly supported by a single read), consistent with sequencing errors.
+- Retained variant: NC_000913.3:4296380 AC>ACGC (2-bp insertion), QUAL 228, depth 18, 17 of 18 reads support the alternate allele, seen on both strands.
+- Not interpreted biologically; no gene annotation was done for this bacterial dataset.
 
 ## Limitations (known in advance)
 - Small bacterial dataset used for learning; it is haploid, so human diploid genotypes are not shown here.
