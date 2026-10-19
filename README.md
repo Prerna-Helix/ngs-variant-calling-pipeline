@@ -28,8 +28,8 @@ FASTQ (raw reads)
 - [x] Reference genome downloaded and indexed
 - [x] Raw read QC with FastQC and MultiQC, results interpreted
 - [x] Trimming with fastp, before/after QC compared
-- [ ] Alignment with BWA-MEM, sorted and indexed BAM
-- [ ] Alignment QC (mapping rate, duplicates, depth)
+- [x] Alignment with BWA-MEM, sorted and indexed BAM
+- [x] Alignment QC (mapping rate, duplicates, depth)
 - [ ] Variant calling and filtering with bcftools
 - [ ] Pipeline combined into one bash script
 - [ ] Python script plotting mean base quality per position
@@ -40,6 +40,7 @@ FASTQ (raw reads)
 - **Reads:** NCBI SRA run `ERR022075` (Illumina, paired-end). Only a subset of reads is used for speed.
 - **Reference:** NCBI nucleotide record `NC_000913.3` (E. coli K-12 MG1655), if the chosen run matches that strain.
 - “Reference: NC_000913.3 (4,641,652 bp), indexed with BWA 0.7.19 and samtools 1.24.”
+- The reference and reads match, since the 99.99% mapping rate shows it.
 - Only publicly available data is used. No patient or personal data is involved. Raw data files are not stored in this repository.
 
 ## Tools and versions
@@ -96,6 +97,11 @@ bash run_pipeline.sh
 - Duplication rate: 0.76%.
 QC reports are in results/qc/
 - Mapping rate and mean depth
+  ### Alignment (BWA-MEM 0.7.19, samtools 1.24)
+- 477,891 trimmed read pairs aligned to NC_000913.3 (E. coli K-12 MG1655).
+- 99.99% of reads mapped; 99.14% properly paired; 27 singletons.
+- Mean depth: 20.8x across the 4,641,652 bp genome.
+- This confirms the dataset matches the reference strain.
 - Number of raw and filtered variants, filters used and why
 
 ## Limitations (known in advance)
