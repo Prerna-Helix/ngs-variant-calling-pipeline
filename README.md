@@ -4,8 +4,7 @@ In-progress learning project: QC to variant calling (FastQC, fastp, BWA, samtool
 
 A learning project that builds a reproducible short-read variant-calling workflow on **public** Illumina sequencing data: quality control, trimming, alignment, variant calling and filtering.
 
-> **Status: in progress. Target completion: 21 October 2026.**
-> The checklist below is updated as each step is finished. Results and scripts will be added as they are completed.
+> **Status: complete (22 October 2026).**
 
 ## Why this project
 I am an M.Sc. Botany graduate (University of Madras) with a wet-lab background in microbiology and bacteriophage research. I am building hands-on bioinformatics skills, and this project is my first end-to-end NGS analysis. It follows the same logical steps used in clinical and research genomics pipelines, on a small bacterial dataset so that every step can be run and understood quickly.
@@ -33,8 +32,8 @@ FASTQ (raw reads)
 - [x] Variant calling and filtering with bcftools
 - [x] Pipeline combined into one bash script
 - [x] Python script plotting mean base quality per position
-- [ ] Short cloud exercise (Google Cloud Shell or AWS CloudShell) documented
-- [ ] Results and limitations written up in this README
+- [x] Short cloud exercise (Google Cloud Shell or AWS CloudShell) documented
+- [x] Results and limitations written up in this README
 
 ## Data
 - **Reads:** NCBI SRA run `ERR022075` (Illumina, paired-end). Only a subset of reads is used for speed.
@@ -105,6 +104,8 @@ QC reports are in results/qc/
 The full workflow runs with one command (`bash run_pipeline.sh`) and reproduced the step-by-step results exactly (22 raw variants, 1 after filtering).
 Plots are made by `scripts/mean_quality_plot.py` in a separate conda environment (`environment_plots.yml`: Python 3.12, Biopython, matplotlib).
 Insert size estimated by BWA-MEM: mean ~504 bp (SD ~27).
+  ### Cloud run
+The repository was cloned and the full pipeline re-run on Google Cloud Shell (same tool versions, conda environment from `environment.yml`). It gave identical results: 22 raw variants, 1 after filtering.
 
 ## Limitations (known in advance)
 - Small bacterial dataset used for learning; it is haploid, so human diploid genotypes are not shown here.
